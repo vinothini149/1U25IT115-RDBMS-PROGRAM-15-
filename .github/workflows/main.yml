@@ -1,0 +1,31 @@
+name: autograding
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  autograding:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Student Code
+        uses: actions/checkout@v4.2.2
+
+      - name: Check answers.sql
+        run: |
+          if [ ! -f answers.sql ]; then
+            echo "ERROR: answers.sql not found."
+            echo "Please submit your PL/SQL program as answers.sql"
+            exit 1
+          fi
+
+      - name: Start Oracle Database
+        run: |
+          echo "Starting Oracle Database..."
+
+      - name: Run Test Script
+        run: |
+          echo "Running PL/SQL validation tests..."
